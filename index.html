@@ -1,0 +1,169 @@
+<html>
+
+<head>
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            /*z-index: 1;*/
+            /* Sit on top */
+            /*left: 0;*/
+            /*top: 0;*/
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .exerciseLabel {
+            color: black;
+            font-size: 90px;
+            height: 100px;
+            display: block;
+            width: 100%;
+            border: 2px solid black;
+            background-color: white;
+            text-align: center;
+        }
+
+        #exerciseModal {
+            height: 280px;
+        }
+
+        #exerciseModalText {
+            font-size: 70px;
+        }
+
+        .exerciseModalBtn {
+            font-size: 40px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="exerciseModalText">Are you sure you want to delete this item?</p>
+            <button class="exerciseModalBtn" id="addSetBtn">Add Set</button>
+            <button class="exerciseModalBtn" id="removeSetBtn">Remove Set</button>
+            <button class="exerciseModalBtn" id="cancelBtn">Do Nothing</button>
+        </div>
+    </div>
+
+    <label class="exerciseLabel" id="shrugs" onmousedown="setPressed(this)" onmouseup="setNotPressed(this)"
+        onclick="handleExercise(this)" data-exercise-count="0" data-seconds-old="0" data-exercise-name="Shrugs">
+        0 Shrugs | 0 Days Old
+    </label>
+</body>
+
+<script>
+    var modal = document.getElementById("myModal");
+
+    currExerciseCount = 0;
+    currentSecondsOld = 0;
+    currExerciseName = "";
+
+    function setPressed(what) {
+        what.style.backgroundColor = 'black';
+        const text = what.dataset.exerciseCount + ' ' + what.dataset.exerciseName + ' | ' + what.dataset.secondsOld + ' Days Old';
+        what.innerHTML = text;
+    }
+
+    function setNotPressed(what) {
+        what.style.backgroundColor = 'white';
+    }
+
+    function handleExercise(what) {
+
+        const exerciseData = what.dataset;
+        currExerciseCount = exerciseData.exerciseCount;
+        currentSecondsOld = exerciseData.secondsOld;
+        currExerciseName = exerciseData.exerciseName;
+
+        exerciseModalText = document.getElementById('exerciseModalText');
+        exerciseModalText.innerHTML = currExerciseName;
+
+        modal.style.display = "block";
+    }
+
+    // MODAL CODE=====================================================================
+    const exerciseModal = document.getElementById('exerciseModal');
+    const addSetBtn = document.getElementById('addSetBtn');
+    const removeSetBtn = document.getElementById('removeSetBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+
+    addSetBtn.addEventListener('click', () => {
+        modal.style.display = "none";
+    });
+
+    removeSetBtn.addEventListener('click', () => {
+        modal.style.display = "none";
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        modal.style.display = "none";
+    });
+
+
+    // MODAL CODE=====================================================================
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("exerciseLabel");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+</html>
